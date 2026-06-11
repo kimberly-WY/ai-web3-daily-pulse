@@ -1,0 +1,13 @@
+{
+  "name": "ai-web3-daily-pulse",
+  "version": "1.0.0",
+  "description": "Daily AI-generated Web3 insights bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "node-fetch": "^2.6.9"
+  }
+}
