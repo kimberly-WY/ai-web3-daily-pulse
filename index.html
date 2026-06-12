@@ -86,7 +86,7 @@ drawStars();
 window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 async function loadReports() {
   try {
-    const res = await fetch('reports/index.json');
+    const res = await fetch('https://raw.githubusercontent.com/kimberly-WY/ai-web3-daily-pulse/main/reports/index.json');
     if (!res.ok) throw new Error('no index');
     const files = await res.json();
     renderList(files);
@@ -108,7 +108,7 @@ function renderList(files) {
   }).join('');
 }
 async function loadReport(filename) {
-  const res = await fetch(`reports/${filename}`);
+  const res = await fetch(`https://raw.githubusercontent.com/kimberly-WY/ai-web3-daily-pulse/main/reports/${filename}`);
   const text = await res.text();
   document.getElementById('reports-list').style.display = 'none';
   const view = document.getElementById('report-view');
