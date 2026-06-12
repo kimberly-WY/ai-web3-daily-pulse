@@ -1,0 +1,56 @@
+name: Daily AI Web3 Report
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate report
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node bot.js
+
+      - name: Update reports index
+        run: |
+          ls reports/*.md | xargs -I{} basename {} > /tmp/reports_list.txt
+          node -e "
+            const fs = require('fs');
+            const files = fs.readFileSync('/tmp/reports_list.txt','utf8').trim().split('\n').filter(Boolean);
+            fs.writeFileSync('reports/index.json', JSON.stringify(files, null, 2));
+            console.log('index.json updated:', files);
+          "
+
+      - name: Git config
+        run: |
+          git config user.name "AI Web3 Bot"
+          git config user.email "bot@ai-web3-daily-pulse.io"
+
+      - name: Commit and push
+        run: |
+          git pull origin main --rebase
+          git add reports/
+          git status
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "🌌 Daily AI+Web3 report $(date +%Y-%m-%d)"
+          git push origin main
