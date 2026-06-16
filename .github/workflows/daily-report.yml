@@ -45,7 +45,6 @@ jobs:
         run: |
           git config user.name "kimberly-WY"
           git config user.email "kimberly-WY@users.noreply.github.com"
-          git pull origin main --rebase
           git add reports/
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
           git commit -m "🌌 Daily AI+Web3 report $(date +%Y-%m-%d)"
