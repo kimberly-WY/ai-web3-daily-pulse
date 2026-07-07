@@ -16,7 +16,7 @@ Every day at **09:00 UTC** (backup at **10:00 UTC**), an AI automatically:
 - 💾 Commits it to this repo
 - 🌐 Updates the live website
 
-## 🌐 Live Site
+## 🌐 Live Site 🌐
 
 👉 **[View Live Reports](https://kimberly-wy.github.io/ai-web3-daily-pulse/)**
 
